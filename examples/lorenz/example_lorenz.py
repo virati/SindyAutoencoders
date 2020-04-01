@@ -2,11 +2,11 @@ import numpy as np
 from scipy.integrate import odeint
 from scipy.special import legendre, chebyt
 import sys
-sys.path.append('../../src')
+sys.path.append('../../../src')
 from sindy_utils import library_size
 
 
-def get_lorenz_data(n_ics, noise_strength=0):
+def get_lorenz_data(n_ics, sigma, beta, rho, noise_strength=0):
     """
     Generate a set of Lorenz training data for multiple random initial conditions.
 
@@ -27,7 +27,7 @@ def get_lorenz_data(n_ics, noise_strength=0):
 
     # training data
     ics = ic_widths*(np.random.rand(n_ics, 3)-.5) + ic_means
-    data = generate_lorenz_data(ics, t, input_dim, linear=False, normalization=np.array([1/40,1/40,1/40]))
+    data = generate_lorenz_data(ics, t, input_dim, linear=False, normalization=np.array([1/40,1/40,1/40]),sigma=sigma,beta=beta,rho=rho)
     data['x'] = data['x'].reshape((-1,input_dim)) + noise_strength*np.random.randn(n_steps*n_ics,input_dim)
     data['dx'] = data['dx'].reshape((-1,input_dim)) + noise_strength*np.random.randn(n_steps*n_ics,input_dim)
     data['ddx'] = data['ddx'].reshape((-1,input_dim)) + noise_strength*np.random.randn(n_steps*n_ics,input_dim)

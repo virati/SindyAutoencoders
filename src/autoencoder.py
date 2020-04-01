@@ -1,6 +1,5 @@
 import tensorflow as tf
 
-
 def full_network(params):
     """
     Define the full network architecture.
